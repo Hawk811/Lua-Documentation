@@ -51,3 +51,21 @@ end)
 mainMenu:add_float("Gravity", 9.8, 0.0, 20.0, 0.1, function(val)
     log.info("Gravity set to " .. val)
 end)
+
+
+local loop_toggle = true
+
+-- Register a function that runs every tick
+function my_loop()
+    if loop_toggle then
+        notification.show("Loop is running")
+        script.sleep(3000) -- delay to avoid spamming
+    end
+end
+
+script.register_looped(my_loop)
+
+-- Add a toggle in the UI to control it
+mainMenu:add_toggle("Enable Loop", true, function(state)
+    loop_toggle = state
+end)
