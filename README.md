@@ -29,19 +29,21 @@ Each `.md` file documents a module in the Lua API:
 ### Create a new menu and add options:
 
 ```lua
-mainExample = menu.add_menu("Example", "Example Menu")
-mainExample2 = menu.add_menu("Example2", "Example Menu 2")
+-- Main menus
+local mainExample = menu.add_menu("Example", "Example Menu")
+local mainExample2 = menu.add_menu("Example2", "Example Menu 2")
 
-mainExample:add_action("Say Hello", function()
+-- mainExample entries
+menu.add_action(mainExample, "Say Hello", function()
     log.info("Hello from Example!")
 end)
 
-mainExample:add_toggle("God Mode", false, function(state)
+menu.add_toggle(mainExample, "God Mode", false, function(state)
     ENTITY.SET_ENTITY_INVINCIBLE(PLAYER.PLAYER_PED_ID(), state)
 end)
 
-mainExample:add_int("Wanted Level", 0, 0, 5, 1, function(val)
-   if val == 0 then
+menu.add_int(mainExample, "Wanted Level", 0, 0, 5, 1, function(val)
+    if val == 0 then
         PLAYER.CLEAR_PLAYER_WANTED_LEVEL(PLAYER.PLAYER_ID())
         PLAYER.SET_MAX_WANTED_LEVEL(0)
         PLAYER.SET_POLICE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), true)
@@ -52,40 +54,55 @@ mainExample:add_int("Wanted Level", 0, 0, 5, 1, function(val)
         PLAYER.SET_PLAYER_WANTED_LEVEL_NOW(PLAYER.PLAYER_ID(), 0)
         GAMEPLAY.SET_FAKE_WANTED_LEVEL(0)
     end
-
 end)
 
-mainExample:add_toggle("Police Ignore", false, function(state)
+menu.add_toggle(mainExample, "Police Ignore", false, function(state)
     PLAYER.SET_POLICE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), state)
 end)
 
-mainExample:add_float("Gravity", 9.8, 0.0, 20.0, 0.1, function(val)
+menu.add_float(mainExample, "Gravity", 9.8, 0.0, 20.0, 0.1, function(val)
     log.info("Gravity set to " .. val)
 end)
 
---Example2 Menu
-mainExample2:add_action("Say Hello", function()
+-- mainExample2 entries
+menu.add_action(mainExample2, "Say Hello", function()
     log.info("Hello from Example2!")
 end)
 
+menu.add_action(mainExample2, "Vehicle Kick", function()
+    local target = network.get_selected_player()
+    local bitset = 1 << target
 
+    local args = {
+        -503325966,
+        PLAYER.PLAYER_ID(),
+        bitset,
+        0, 0, 0, 0, 0, 0, 0
+    }
+
+    network.trigger_script_event(bitset, args)
+end)
+
+menu.add_action(mainExample2, "Force Script Host", function()
+    network.force_script_host("freemode")
+end)
+
+-- Loop toggle state
 local loop_toggle = true
 
--- Register a function that runs every tick
 function my_loop()
     if loop_toggle then
         notification.show("Loop is running")
-        script.sleep(3000) -- delay to avoid spamming
+        script.sleep(3000)
     end
 end
 
 script.register_looped(my_loop)
 
+-- Submenu for settings
+local settingsMenu = menu.add_submenu(mainExample, "Settings")
 
--- Create a child submenu under the main menu
-settingsMenu = mainExample:add_submenu("Settings")
-
-settingsMenu:add_toggle("Enable Loop", true, function(state)
+menu.add_toggle(settingsMenu, "Enable Loop", true, function(state)
     loop_toggle = state
 end)
 
