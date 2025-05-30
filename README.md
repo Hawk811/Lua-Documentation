@@ -69,3 +69,15 @@ script.register_looped(my_loop)
 mainMenu:add_toggle("Enable Loop", true, function(state)
     loop_toggle = state
 end)
+
+
+-- Create a child submenu under the main menu
+settingsMenu = mainMenu:add_submenu("Settings")
+
+settingsMenu:add_action("Reset Wanted Level", function()
+    PLAYER.CLEAR_PLAYER_WANTED_LEVEL(PLAYER.PLAYER_ID())
+end)
+
+settingsMenu:add_toggle("Police Ignore", true, function(state)
+    PLAYER.SET_POLICE_IGNORE_PLAYER(PLAYER.PLAYER_ID(), state)
+end)
