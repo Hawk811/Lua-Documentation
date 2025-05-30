@@ -69,20 +69,6 @@ menu.add_action(mainExample2, "Say Hello", function()
     log.info("Hello from Example2!")
 end)
 
-menu.add_action(mainExample2, "Vehicle Kick", function()
-    local target = network.get_selected_player()
-    local bitset = 1 << target
-
-    local args = {
-        -503325966,
-        PLAYER.PLAYER_ID(),
-        bitset,
-        0, 0, 0, 0, 0, 0, 0
-    }
-
-    network.trigger_script_event(bitset, args)
-end)
-
 menu.add_action(mainExample2, "Force Script Host", function()
     network.force_script_host("freemode")
 end)
