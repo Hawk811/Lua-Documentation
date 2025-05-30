@@ -6,39 +6,34 @@ Table for creating and managing UI menus and submenus.
 
 ### `add_menu(name, title)`
 
- Create a new menu and return a SubMenu object to add options into.
+ Create a new menu and return a submenu ID (integer handle).
  
 - **Parameters:**
-  - `add_menu` (string, string): Name_id, Title of the tab to get.
+  - `name` (string): Internal identifier.
+  - `title` (string): Title shown in the UI.
 
 - **Returns:**
-  - `submenu`: A tab instance which corresponds to the submenu in the GUI.
+  - `int` A handle representing the submenu.
 
 **Example Usage:**
 ```lua
 mainMenu = menu.add_menu("main", "My Main Menu")
 ```
 
-
-# Table: SubMenu
-
-Represents a submenu returned by menu.add_menu. Allows chaining menu options into a specific section.
-
-## Functions (5)
-
-### `add_submenu(name)`
+### `add_submenu(parent_id, name)`
 
  Create and attach a child submenu to the current submenu.
 
 - **Parameters:**
-  - `add_submenu` (string): Name of the child submenu.
+  - `parent_id` (int): Handle of the parent submenu.
+  - `name` (string): Name of the child submenu.
 
 - **Returns:**
-  - `SubMenu`: A new submenu object.
+  - `int` A new submenu handle.
  
 **Example Usage:**
 ```lua
-settingsMenu = mainMenu:add_submenu("Settings")
+settingsMenu = menu.add_submenu(mainMenu, "Settings")
 ```
 
 ### `add_action(label, callback)`
@@ -51,7 +46,7 @@ settingsMenu = mainMenu:add_submenu("Settings")
  
 **Example Usage:**
 ```lua
- mainMenu:add_action("Say Hello", function()
+ menu.add_action(mainMenu, "Say Hello", function()
         log.info("Hello from Lua")
     end)
 ```
@@ -67,7 +62,7 @@ settingsMenu = mainMenu:add_submenu("Settings")
  
 **Example Usage:**
 ```lua
-  mainMenu:add_toggle("God Mode", false, function(enabled)
+ menu.add_toggle(mainMenu, "God Mode", false, function(enabled)
         ENTITY.SET_ENTITY_INVINCIBLE(PLAYER.PLAYER_PED_ID(), enabled)
     end)
 ```
@@ -87,7 +82,7 @@ settingsMenu = mainMenu:add_submenu("Settings")
  
 **Example Usage:**
 ```lua
-  mainMenu:add_int("Speed", 50, 0, 100, 5, function(val)
+   menu.add_int(mainMenu, "Speed", 50, 0, 100, 5, function(val)
         log.info("Speed set to: " .. val)
     end)
 ```
@@ -107,7 +102,7 @@ settingsMenu = mainMenu:add_submenu("Settings")
  
 **Example Usage:**
 ```lua
-  mainMenu:add_float("Gravity", 9.8, 0.0, 20.0, 0.1, function(val)
+   menu.add_float(mainMenu, "Gravity", 9.8, 0.0, 20.0, 0.1, function(val)
         log.info("Gravity set to: " .. val)
     end)
 ```
