@@ -9,12 +9,24 @@ Table containing helper functions for network related features.
 Call trigger_script_event (TSE)
 
 - **Parameters:**
-  - `bitset` (integer)
-  - `_args` (table)
+  - `event_group` (integer): Usually 1 for host group.
+  - `args` (table): A Lua table containing the raw argument values (e.g., integers).
+  - `bitset` (integer): Bitmask of target players (e.g., 1 << player_id).
+  - `event_id` (integer): The script event ID (typically same as args[0]).
 
 **Example Usage:**
 ```lua
-network.trigger_script_event(bitset, _args)
+local target = network.get_selected_player()
+local bitset = 1 << target
+
+local args = {
+     -503325966,
+    PLAYER.PLAYER_ID(),
+    bitset,
+    0, 0, 0, 0, 0, 0, 0
+}
+
+network.trigger_script_event(1, args, bitset,  -503325966)
 ```
 
 ### `get_selected_player()`
@@ -24,7 +36,7 @@ network.trigger_script_event(bitset, _args)
 
 **Example Usage:**
 ```lua
-integer = network.get_selected_player()
+playerID = network.get_selected_player()
 ```
 
 
