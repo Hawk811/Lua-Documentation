@@ -11,7 +11,7 @@ Registers a function that will be looped as a gta script.
 ```lua
 script.register_looped(function (script)
      -- sleep until next game frame
-     script:yield()
+     script.yield()
 
      local ModelHash = joaat("adder")
      if not STREAMING.IS_MODEL_IN_CDIMAGE(ModelHash) then return end
@@ -26,7 +26,7 @@ script.register_looped(function (script)
      -- removes model from game memory as we no longer need it
      STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ModelHash)
      -- sleep for 2s
-     script:sleep(2000)
+     script.sleep(2000)
      ENTITY.DELETE_ENTITY(spawnedVehicle)
 end)
 ```
