@@ -140,3 +140,52 @@ imgui.push_style_color(ImGuiCol_WindowBg, 30, 30, 30, 255)
 ```lua
 imgui.pop_style_color(1)
 ```
+
+
+**Example Code:**
+```lua
+-- Persistent states
+local my_toggle = false
+local my_value = 0.5
+local slider_val = 5
+local current_option = 0
+local options = { "Option A", "Option B", "Option C" }
+
+local bg_r, bg_g, bg_b, bg_a = 0,  0, 0, 255  -- out of 255
+local window_flags = imgui.flags.NoTitleBar + imgui.flags.NoResize
+
+imgui.register_draw(function()	
+	imgui.push_style_color(imgui.col.WindowBg, bg_r, bg_g, bg_b, bg_a)
+   if imgui.begin_window("Lua Panel", 400, 300, window_flags) then
+
+        imgui.text("Text Render")
+
+        -- Toggle (update local state)
+	my_toggle = imgui.checkbox("Enable Feature 2", my_toggle, function(my_toggle) log.info("test: " .. tostring(my_toggle)) end)
+	
+	-- float 
+	 my_value = imgui.slider_float("Adjust Value", my_value, 0.0, 1.0, function(v)
+            log.info("Slider value changed: " .. tostring(v))
+        end)
+	
+	-- int 
+	 slider_val = imgui.slider_int("Int Slider", slider_val, 0, 10, function(v)
+            log.info("Slider changed to: " .. v)
+        end)
+	
+	-- combo 
+ 	 current_option = imgui.combo("Select Option", current_option, options, function(index)
+            log.info("Selected index: " .. index .. ", value: " .. options[index + 1])
+        end)
+
+        -- Button
+        imgui.button("Confirm", function()
+            log.info("Selected: " .. my_options[my_selected + 1])
+        end)
+
+        imgui.end_window()
+    end
+	 imgui.pop_style_color(1)
+end)
+
+```
