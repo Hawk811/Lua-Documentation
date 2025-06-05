@@ -1,5 +1,7 @@
 # Table: imgui
 
+All functions parameters run in script fiber
+
 ### `begin_window(title, x, y, flags)`
 
 - **Parameters:**
