@@ -2,6 +2,27 @@
 
 All functions parameters run in script fiber
 
+### `register_draw(imgui_function)`
+
+- **Parameters:**
+  - `imgui_function` (imgui)
+    
+**Example Usage:**
+```lua
+imgui.register_draw(function()
+	local bg_r, bg_g, bg_b, bg_a = 0,  0, 0, 255  -- out of 255
+	local window_flags = imgui.flags.NoTitleBar + imgui.flags.NoResize
+	imgui.push_style_color(imgui.col.WindowBg, bg_r, bg_g, bg_b, bg_a)
+   	if imgui.begin_window("Lua Panel", 400, 300, window_flags) then
+
+        	imgui.text("Text Render")
+        	imgui.end_window()
+    	end
+	imgui.pop_style_color(1)
+end)
+
+```
+
 ### `begin_window(title, x, y, flags)`
 
 - **Parameters:**
