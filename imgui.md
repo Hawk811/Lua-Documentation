@@ -78,36 +78,30 @@ OR
 imgui.checkbox("Enable Feature", my_toggle, function(val) my_toggle = val log.info("test: " .. tostring(val)) end)
 ```
 
-### `slider_float(label, value, min, max, function)`
+### `slider_float(label, value, min, max)`
 
 - **Parameters:**
   - `label` (string)
   - `value` (float)
   - `min` (float)
   - `max` (float)
-  - `function` (function)
 
 **Example Usage:**
 ```lua
- my_value = imgui.slider_float("Adjust Value", my_value, 0.0, 1.0, function(v)
-            log.info("Slider value changed: " .. tostring(v))
-        end)
+ my_value = imgui.slider_float("Adjust Value", my_value, 0.0, 1.0)
 ```
 
-### `slider_int(label, value, min, max, function)`
+### `slider_int(label, value, min, max)`
 
 - **Parameters:**
   - `label` (string)
   - `value` (int)
   - `min` (int)
   - `max` (int)
-  - `function` (function)
 
 **Example Usage:**
 ```lua
- my_value = imgui.slider_int("Adjust Value", my_value, 0.0, 10, function(v)
-            log.info("Slider value changed: " .. tostring(v))
-        end)
+ my_value = imgui.slider_int("Adjust Value", my_value, 0.0, 10)
 ```
 
 ### `combo(label, current_item, items, function)`
