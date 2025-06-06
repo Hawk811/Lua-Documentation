@@ -20,6 +20,19 @@ Table for creating and managing UI menus and submenus.
 mainMenu = menu.add_menu("main", "My Main Menu")
 ```
 
+### `is_open()`
+
+ Returns if UI is open.
+
+- **Returns:**
+  - `bool` A handle representing if UI is open.
+
+**Example Usage:**
+```lua
+local isUIOpen = menu.is_open()
+```
+
+
 ### `add_submenu(parent_id, name)`
 
  Create and attach a child submenu to the current submenu.
