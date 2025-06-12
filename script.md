@@ -4,7 +4,7 @@ Table containing helper functions related to gta scripts.
 
 ## Functions (2)
 
-### `add_script(func)`
+### `register_looped(func)`
 
 Registers a function that will be looped as a gta script.
 **Example Usage:**
