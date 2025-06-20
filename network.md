@@ -29,6 +29,41 @@ local args = {
 network.trigger_script_event(1, args, bitset,  -503325966)
 ```
 
+### `player_count()`
+
+- **Returns:**
+  - `integer`: Returns the count of players in session (each integer is the players ID).
+
+**Example Usage:**
+```lua
+local maxPlayers = network.player_count()
+```
+
+### `get_player_ped(id)`
+
+- **Parameters:**
+  - `id` (integer): ID(index) of player
+    
+- **Returns:**
+  - `Ped`: Returns players ped hanld using native.
+
+**Example Usage:**
+```lua
+local count = memory.player_count
+log.info("Total players in session: " .. count)
+
+-- === Example: loop through all players ===
+for i = 0, count - 1 do
+    local ped = memory.get_player_ped(i)
+    log.info(string.format("Player ID %d -> Ped Handle %d", i, ped))
+end
+
+-- === Example: get local player ped ===
+local myId = PLAYER.PLAYER_ID()  -- or 0 if you want self
+local myPed = memory.get_player_ped(myId)
+log.info(string.format("My Ped Handle: %d", myPed))
+```
+
 ### `get_selected_player()`
 
 - **Returns:**
