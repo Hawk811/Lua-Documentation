@@ -79,7 +79,7 @@ memory.free(buf)
 log.info("Buffer freed.")
 ```
 
-### `pattern(label, pattern):scan()`
+### `pattern(label, pattern)`
 
 - **Parameters:**
     - `label` (string): Name for Pattern.
@@ -118,7 +118,7 @@ ptr:set_float(3.14159)
 **Example Usage:**
 ```lua
 -- === 1) Scan for a pattern ===
-local p = memory.pattern("MyPattern", "72 C7 EB 02 31 C0 8B 0D"):scan()
+local p = memory.pattern("MyPattern", "72 C7 EB 02 31 C0 8B 0D")
 
 if p:is_valid() then
     -- === 2) Compute the final address ===
@@ -163,9 +163,8 @@ print(string.format("[4] Buffer initial u32: %d", val))
 
 -- === 5) Pattern scan example ===
 local pattern = memory.pattern("TestPattern", "72 C7 EB 02 31 C0 8B 0D")
-local match = pattern:scan()
-if match:is_valid() then
-    local addr = match:add(0x1A):rip()
+if pattern:is_valid() then
+    local addr = pattern:add(0x1A):rip()
     local patVal = addr:get_u32()
     print(string.format("[5] Pattern scan value: 0x%X", patVal))
 else
