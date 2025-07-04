@@ -18,7 +18,7 @@ Table for memory scanning.
 ```lua
 local playerPed = PLAYER.PLAYER_PED_ID()
 local pedPtr = memory.handle_to_ptr(playerPed)
-log.info(string.format("Player ped pointer: 0x%X", pedPtr:get_ptr()))
+log.info(string.format("Player ped pointer: 0x%X", pedPtr))
 ```
 
 ### `ptr_to_handle(ptr)`
@@ -49,18 +49,18 @@ log.info("Handle: " .. handle)
 **Example Usage:**
 ```lua
 local buf = memory.allocate(128)
-log.info(string.format("Allocated buffer: 0x%X", buf:get_ptr()))
+log.info(string.format("Allocated buffer: 0x%X", memory.get_ptr(buf)))
 
 OR
 
 local mem = memory.allocate(16)
 
-mem:set_u32(1337)
-local v = mem:get_u32()
+memory.set_u32(mem, 1337)
+local v = memory.get_u32(mem)
 log.info("Value is: ", v)  -- should be 1337
 
-mem:set_float(3.14)
-local f = mem:get_float()
+memory.set_float(mem, 3.14)
+local f = memory.get_float(mem)
 log.info("Float is: ", f)
 
 memory.free(mem)
@@ -86,33 +86,36 @@ log.info("Buffer freed.")
     - `pattern` (string): pattern in string.
 
  - **Returns:**
-  - `memory type class` returns scanned memory.
+  - `Address` returns scanned memory.
 
  - **Memory Class:**
-  - add(intptr_t)
-  - sub(intptr_t)
-  - rip()
+  - memory.add(intptr_t)
+  - memory.sub(intptr_t)
+  - memory.rip()
     
-  - get_u8() -> uint8_t
-  - get_u16() -> uint16_t
-  - get_u32() -> uint32_t
-  - get_u64() -> uint64_t
-  - get_float() -> float
-  - get_ptr() -> uintptr_t
+  - memory.get_u8(address) -> uint8_t
+  - memory.get_u16(address) -> uint16_t
+  - memory.get_u32(address) -> uint32_t
+  - memory.get_u64(address) -> uint64_t
+  - memory.get_float(address) -> float
+  - memory.get_ptr(address) -> uintptr_t
+  - memory.get_bool(address) -> bool
     
-  - set_u8(uint8_t)
-  - set_u16(uint16_t)
-  - set_u32(uint32_t)
-  - set_u64(uint64_t)
-  - set_float(float)
+  - memory.set_u8(address, uint8_t)
+  - memory.set_u16(address, uint16_t)
+  - memory.set_u32(address, uint32_t)
+  - memory.set_u64(address, uint64_t)
+  - memory.set_float(address, float)
+  - memory.set_bool(address, bool)
     
-  - is_valid() -> bool
+  - memory.is_valid(address) -> bool
 ```lua
-ptr:set_u8(0xFF)
-ptr:set_u16(0xBEEF)
-ptr:set_u32(12345)
-ptr:set_u64(0xDEADBEEFCAFEBABE)
-ptr:set_float(3.14159)
+memory.set_u8(ptr, 0xFF)
+memory.set_u16(ptr, 0xBEEF)
+memory.set_u32(ptr, 12345)
+memory.set_u64(ptr, 0xDEADBEEFCAFEBABE)
+memory.set_float(ptr, 3.14159)
+memory.set_bool(ptr, true)
 ```
 
 **Example Usage:**
@@ -120,20 +123,21 @@ ptr:set_float(3.14159)
 -- === 1) Scan for a pattern ===
 local p = memory.pattern("MyPattern", "72 C7 EB 02 31 C0 8B 0D")
 
-if p:is_valid() then
+if memory.is_valid(p) then
     -- === 2) Compute the final address ===
-    local ripTarget = p:add(0x1A):rip()
+    local newTarget = memory.add(p, 0x1A)
+    local ripTarget = memory.rip(newTarget)
 
     -- === 3) Read the original value ===
-    local original = ripTarget:get_u32()
+    local original = memory.get_u32(ripTarget)
     log.info(string.format("Original u32: 0x%X", original))
 
     -- === 4) Write a new value ===
-    ripTarget:set_u32(1337)
+    memory.set_u32(ripTarget, 1337)
     log.info("Set new u32: 1337")
 
     -- === 5) Verify that it changed ===
-    local updated = ripTarget:get_u32()
+    local updated = memory:get_u32(ripTarget)
     log.info(string.format("Updated u32: 0x%X", updated))
 else
     log.info("Pattern not found.")
@@ -146,7 +150,7 @@ end
    -- === 1) Get player ped handle and pointer ===
 local ped = PLAYER.PLAYER_PED_ID()
 local pedPtr = memory.handle_to_ptr(ped)
-print(string.format("[1] Player ped pointer: 0x%X", pedPtr:get_ptr()))
+print(string.format("[1] Player ped pointer: 0x%X", pedPtr))
 
 -- === 2) Convert pointer back to handle ===
 local handleAgain = memory.ptr_to_handle(pedPtr)
@@ -154,18 +158,19 @@ print(string.format("[2] Pointer back to handle: %d", handleAgain))
 
 -- === 3) Allocate a buffer ===
 local buf = memory.allocate(64)
-print(string.format("[3] Allocated buffer: 0x%X", buf:get_ptr()))
+print(string.format("[3] Allocated buffer: 0x%X", memory.get_ptr(buf)))
 
 -- === 4) Write to it (if you have set_* bound) or read default ===
 -- Here we just read: should be zero
-local val = buf:get_u32()
+local val = memory.get_u32(buf)
 print(string.format("[4] Buffer initial u32: %d", val))
 
 -- === 5) Pattern scan example ===
 local pattern = memory.pattern("TestPattern", "72 C7 EB 02 31 C0 8B 0D")
-if pattern:is_valid() then
-    local addr = pattern:add(0x1A):rip()
-    local patVal = addr:get_u32()
+if memory.is_valid(pattern) then
+    local addr = memory.add(pattern, 0x1A):rip()
+    local rippedaddr = memory.rip(addr)
+    local patVal = memory:get_u32(rippedaddr)
     print(string.format("[5] Pattern scan value: 0x%X", patVal))
 else
     print("[5] Pattern not found.")
