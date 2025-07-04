@@ -139,20 +139,20 @@ end
    -- === 1) Get player ped handle and pointer ===
 local ped = PLAYER.PLAYER_PED_ID()
 local pedPtr = memory.handle_to_ptr(ped)
-print(string.format("[1] Player ped pointer: 0x%X", pedPtr))
+log.info(string.format("[1] Player ped pointer: 0x%X", pedPtr))
 
 -- === 2) Convert pointer back to handle ===
 local handleAgain = memory.ptr_to_handle(pedPtr)
-print(string.format("[2] Pointer back to handle: %d", handleAgain))
+log.info(string.format("[2] Pointer back to handle: %d", handleAgain))
 
 -- === 3) Allocate a buffer ===
 local buf = memory.allocate(64)
-print(string.format("[3] Allocated buffer: 0x%X", memory.get_ptr(buf)))
+log.info(string.format("[3] Allocated buffer: 0x%X", memory.get_ptr(buf)))
 
 -- === 4) Write to it (if you have set_* bound) or read default ===
 -- Here we just read: should be zero
 local val = memory.get_u32(buf)
-print(string.format("[4] Buffer initial u32: %d", val))
+log.info(string.format("[4] Buffer initial u32: %d", val))
 
 -- === 5) Pattern scan example ===
 local pattern = memory.pattern("TestPattern", "72 C7 EB 02 31 C0 8B 0D")
@@ -160,14 +160,14 @@ if memory.is_valid(pattern) then
     local addr = memory.add(pattern, 0x1A):rip()
     local rippedaddr = memory.rip(addr)
     local patVal = memory:get_u32(rippedaddr)
-    print(string.format("[5] Pattern scan value: 0x%X", patVal))
+    log.info(string.format("[5] Pattern scan value: 0x%X", patVal))
 else
-    print("[5] Pattern not found.")
+    log.info("[5] Pattern not found.")
 end
 
 -- === 6) Free the buffer ===
 memory.free(buf)
-print("[6] Buffer freed.")
+log.info("[6] Buffer freed.")
 ```
 
 
