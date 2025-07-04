@@ -121,26 +121,15 @@ memory.set_bool(ptr, true)
 **Example Usage:**
 ```lua
 -- === 1) Scan for a pattern ===
-local p = memory.pattern("MyPattern", "72 C7 EB 02 31 C0 8B 0D")
+local addr = memory.pattern("NPMLUA", "0F B6 05 ? ? ? ? 0A 05 ? ? ? ? 75 2A")
+if memory.is_valid(addr) then
+    log.info(string.format("Found pattern at: 0x%X", addr))
 
-if memory.is_valid(p) then
-    -- === 2) Compute the final address ===
-    local newTarget = memory.add(p, 0x1A)
-    local ripTarget = memory.rip(newTarget)
+    local new_addr = memory.add(addr, 3)
+    local ripped_addr = memory.rip(new_addr) -- dereference RIP displacement
 
-    -- === 3) Read the original value ===
-    local original = memory.get_u32(ripTarget)
-    log.info(string.format("Original u32: 0x%X", original))
-
-    -- === 4) Write a new value ===
-    memory.set_u32(ripTarget, 1337)
-    log.info("Set new u32: 1337")
-
-    -- === 5) Verify that it changed ===
-    local updated = memory:get_u32(ripTarget)
-    log.info(string.format("Updated u32: 0x%X", updated))
-else
-    log.info("Pattern not found.")
+    local bool_val = memory.get_bool(ripped_addr)
+    log.info("Bool value at ripped address (0x" .. string.format("%X", ripped_addr) .. "): " .. tostring(bool_val))
 end
 ```
 
@@ -179,4 +168,34 @@ end
 -- === 6) Free the buffer ===
 memory.free(buf)
 print("[6] Buffer freed.")
+```
+
+
+### `byte_patch(label, pattern)`
+
+- **Parameters:**
+    - `address` (uintptr_t): address.
+    - `{}` (array): array of bytes.
+
+ - **Returns:**
+  - `address` returns ready address [void*].
+
+ - **Memory Class:**
+  - memory.apply_patch(address)
+  - memory.restore_patch(address)
+    
+```lua
+local addr = memory.pattern("GCGP", "48 8B 54 C1 ? 4C 8B A9")
+local patch_addr = memory.byte_patch(addr, { 0x90, 0x90, 0x90, 0x90, 0x90 })
+
+function my_loop()
+	script.yield()
+    if not TASK.IS_PED_STILL(PLAYER.PLAYER_PED_ID()) then
+       memory.apply_patch(patch_addr)
+    else
+	      memory.restore_patch(patch_addr)
+    end
+end
+
+script.register_looped(my_loop)
 ```
