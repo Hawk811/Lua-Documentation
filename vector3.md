@@ -1,4 +1,4 @@
-# Class: vec3
+# Class: Vector3
 
 Class representing a 3D vector.
 
@@ -24,7 +24,7 @@ z component of the vector.
 
 ## Constructors (1)
 
-### `new(x, y, z)`
+### `(x, y, z)`
 
 Returns a vector that contains the x, y, and z values.
 
@@ -35,6 +35,6 @@ Returns a vector that contains the x, y, and z values.
 
 **Example Usage:**
 ```lua
-myInstance = vec3:new(x, y, z)
+local v = Vector3(1.0, 2.0, 3.0)
 ```
 
