@@ -1,90 +1,90 @@
-# Table: globals
+# Table: tunables
 
 Table containing functions for manipulating gta script globals.
 
 ## Functions (9)
 
-### `get_int(global)`
+### `get_int(hash)`
 
-Retrieves an int global value.
+Retrieves an int tunables value.
 
 - **Parameters:**
-  - `global` (integer): index of the global
+  - `hash` (integer): index of the tunables
 
 - **Returns:**
-  - `integer`: value of the global
+  - `integer`: value of the tunables
 
 **Example Usage:**
 ```lua
-integer = globals.get_int(global)
+integer = tunables.get_int(hash)
 ```
 
-### `get_float(global)`
+### `get_float(hash)`
 
-Retrieves a float global value.
+Retrieves a float tunables value.
 
 - **Parameters:**
-  - `global` (integer): index of the global
+  - `hash` (integer): index of the tunables
 
 - **Returns:**
-  - `float`: value of the global
+  - `float`: value of the tunables
 
 **Example Usage:**
 ```lua
-float = globals.get_float(global)
+float = tunables.get_float(hash)
 ```
 
-### `get_string(global)`
+### `get_string(hash)`
 
-Retrieves a string global value.
+Retrieves a string tunables value.
 
 - **Parameters:**
-  - `global` (integer): index of the global
+  - `hash` (integer): index of the tunables
 
 - **Returns:**
-  - `string`: value of the global
+  - `string`: value of the tunables
 
 **Example Usage:**
 ```lua
-string = globals.get_string(global)
+string = tunables.get_string(hash)
 ```
 
-### `set_int(global, val)`
+### `set_int(hash, val)`
 
-Sets an int global value.
+Sets an int tunables value.
 
 - **Parameters:**
-  - `global` (integer): index of the global
-  - `val` (integer): new value for the global
+  - `hash` (integer): index of the tunables
+  - `val` (integer): new value for the tunables
 
 **Example Usage:**
 ```lua
-globals.set_int(global, val)
+tunables.set_int(hash, val)
 ```
 
-### `set_float(global, val)`
+### `set_float(hash, val)`
 
-Sets a float global value.
+Sets a float tunables value.
 
 - **Parameters:**
-  - `global` (integer): index of the global
-  - `val` (float): new value for the global
+  - `hash` (integer): index of the tunables
+  - `val` (float): new value for the tunables
 
 **Example Usage:**
 ```lua
-globals.set_float(global, val)
+tunables.set_float(hash, val)
 ```
 
-### `set_string(global, str)`
+### `set_string(hash, str)`
 
-Sets a string global value.
+Sets a string tunables value.
 
 - **Parameters:**
-  - `global` (integer): index of the global
-  - `str` (string): new value for the global
+  - `hash` (integer): index of the tunables
+  - `str` (string): new value for the tunables
 
 **Example Usage:**
 ```lua
-globals.set_string(global, str)
+tunables.set_string(hash, str)
 ```
 
