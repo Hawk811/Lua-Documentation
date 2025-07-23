@@ -23,6 +23,22 @@ end)
 
 ```
 
+### `toggle_input(toggle)`
+
+- **Parameters:**
+  - `toggle` (bool)
+    
+**Example Usage:**
+```lua
+if uiOpen then
+   imgui.toggle_input(true)
+else
+   imgui.toggle_input(false)
+end
+
+-- this enables mouse and block game input
+```
+
 ### `begin_window(title, x, y, flags)`
 
 - **Parameters:**
