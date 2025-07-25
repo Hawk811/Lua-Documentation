@@ -11,7 +11,12 @@ Table containing helper functions related to gta script events.
 
 **Example Usage:**
 ```lua
+local bounty_protection_enabled = true
 script_events.on_event(function(sender_id, event_index, args)
+    if not bounty_protection_enabled then
+        return true -- skip protection, allow event
+    end
+
     if event_index == ScriptEventIndex.Bounty then
         local target = args[1]
         local amount = args[3]
