@@ -16,8 +16,8 @@ ScriptEventIndex = {
     -- more
 }
 
-
 local bounty_protection_enabled = true
+
 script_events.on_event(function(sender_id, event_index, args)
     if not bounty_protection_enabled then
         return true -- skip protection, allow event
