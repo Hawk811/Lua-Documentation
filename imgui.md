@@ -1,4 +1,4 @@
-# Table: imgui
+# Table: ImGui
 
 All functions parameters run in script fiber
 
@@ -9,16 +9,8 @@ All functions parameters run in script fiber
     
 **Example Usage:**
 ```lua
-imgui.register_draw(function()
-	local bg_r, bg_g, bg_b, bg_a = 0,  0, 0, 255  -- out of 255
-	local window_flags = imgui.flags.NoTitleBar + imgui.flags.NoResize
-	imgui.push_style_color(imgui.col.WindowBg, bg_r, bg_g, bg_b, bg_a)
-   	if imgui.begin_window("Lua Panel", 400, 300, window_flags) then
-
-        	imgui.text("Text Render")
-        	imgui.end_window()
-    	end
-	imgui.pop_style_color(1)
+ImGui.register_draw(function()
+	--ui
 end)
 
 ```
@@ -31,25 +23,15 @@ end)
 **Example Usage:**
 ```lua
 if uiOpen then
-   imgui.toggle_input(true)
+   ImGui.toggle_input(true)
 else
-   imgui.toggle_input(false)
+   ImGui.toggle_input(false)
 end
 
 -- this enables mouse and block game input
 ```
 
-# sol2_ImGui_Bindings
-
-## Checkout former repo here: https://github.com/MSeys/sol2_ImGui_Bindings
-This version was modified a bit to make it work properly with Cyber Engine Tweaks, docs part of README.md taken and modified to match modifications.
-If you want some sample demo, see demo in Dear ImGui master, translates almost 1:1 to Lua: https://github.com/ocornut/imgui/blob/master/imgui_demo.cpp
-
-# How to Use
-```cpp
-  // Call this function!
-  sol_ImGui::InitBindings(lua); // lua being your sol::state
-```
+# ImGui_Bindings
 
 # Documentation
 You can find all the supported functions and overloads below.
