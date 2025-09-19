@@ -1,23 +1,69 @@
 # Table: menu
 
-Table for creating and managing UI menus and submenus.
+Table for creating options in ui. This uses the imgui bindings. 
 
-## Functions (1)
+## Functions (3)
 
-### `add_menu(name, title)`
+### `on_draw(function)`
 
- Create a new menu and return a submenu ID (integer handle).
- 
-- **Parameters:**
-  - `name` (string): Internal identifier.
-  - `title` (string): Title shown in the UI.
-
-- **Returns:**
-  - `int` A handle representing the submenu.
+ creates a tab in scripting with lua name.
 
 **Example Usage:**
 ```lua
-mainMenu = menu.add_menu("main", "My Main Menu")
+menu.on_draw(function()
+    if ImGui.BeginTabBar("my_tabs") then   -- starts tab bar
+
+        -- Tab 1
+        if ImGui.BeginTabItem("Tab 1") then
+            ImGui.Text("This is inside Tab 1")
+
+            -- Open a header block
+            ImGui.ListHeader("Quick Actions", 180)
+            for i = 1, 10 do
+                if ImGui.Button("Button " .. i) then
+                    log.info("Clicked Button " .. i)
+                end
+            end
+            ImGui.EndListHeader()         -- close header block
+
+            ImGui.EndTabItem()            -- close Tab 1
+        end
+
+    end
+end)
+
+
+```
+
+### `on_draw_player(function)`
+
+ creates a tab in players section with lua name.
+
+**Example Usage:**
+```lua
+menu.on_draw_player(function()
+    if ImGui.BeginTabBar("my_tabs") then   -- starts tab bar
+
+        -- Tab 1
+        if ImGui.BeginTabItem("Tab 1") then
+            ImGui.Text("This is inside Tab 1")
+
+            -- Open a header block
+            ImGui.ListHeader("Quick Actions", 180)
+            for i = 1, 10 do
+                if ImGui.Button("Button " .. i) then
+                    log.info("Clicked Button " .. i)
+                end
+            end
+            ImGui.EndListHeader()         -- close header block
+
+            ImGui.EndTabItem()            -- close Tab 1
+        end
+
+    end
+end)
+
+
 ```
 
 ### `is_open()`
@@ -30,92 +76,4 @@ mainMenu = menu.add_menu("main", "My Main Menu")
 **Example Usage:**
 ```lua
 local isUIOpen = menu.is_open()
-```
-
-
-### `add_submenu(parent_id, name)`
-
- Create and attach a child submenu to the current submenu.
-
-- **Parameters:**
-  - `parent_id` (int): Handle of the parent submenu.
-  - `name` (string): Name of the child submenu.
-
-- **Returns:**
-  - `int` A new submenu handle.
- 
-**Example Usage:**
-```lua
-settingsMenu = menu.add_submenu(mainMenu, "Settings")
-```
-
-### `add_action(label, callback)`
-
-  Add a clickable action/button to the submenu.
-
-- **Parameters:**
-  - `label` (string): Text shown in the UI.
-  - `callback` (function): Function to execute when clicked.
- 
-**Example Usage:**
-```lua
- menu.add_action(mainMenu, "Say Hello", function()
-        log.info("Hello from Lua")
-    end)
-```
-
-### `add_toggle(label, value, callback?)`
-
- Add a toggle (checkbox) to the submenu.
-
-- **Parameters:**
-    - `label` (string): Display name of the toggle.
-    - `value` (boolean): Initial toggle state (true or false).
-    - `callback` (function, optional): Called when toggled with the new state.
- 
-**Example Usage:**
-```lua
- menu.add_toggle(mainMenu, "God Mode", false, function(enabled)
-        ENTITY.SET_ENTITY_INVINCIBLE(PLAYER.PLAYER_PED_ID(), enabled)
-    end)
-```
-
-
-### `add_int(label, value, min, max, step, callback?)`
-
-  Add an integer slider to the submenu.
-
-- **Parameters:**
-    - `label` (string): Display name.
-    - `value` (integer): Initial value.
-    - `min` (integer): Minimum value.
-    - `max` (integer): Maximum value.
-    - `step` (integer): Step between values.
-    - `callback` (function, optional): Called when value is changed.
- 
-**Example Usage:**
-```lua
-   menu.add_int(mainMenu, "Speed", 50, 0, 100, 5, function(val)
-        log.info("Speed set to: " .. val)
-    end)
-```
-
-
-### `add_float(label, value, min, max, step, callback?)`
-
-    Add a float slider to the submenu.
-
-- **Parameters:**
-    - `label` (string): Display name.
-    - `value` (float): Initial value.
-    - `min` (float): Minimum value.
-    - `max` (float): Maximum value.
-    - `step` (float): Step between values.
-    - `callback` (function, optional): Called when value is changed.
- 
-**Example Usage:**
-```lua
-   menu.add_float(mainMenu, "Gravity", 9.8, 0.0, 20.0, 0.1, function(val)
-        log.info("Gravity set to: " .. val)
-    end)
 ```
