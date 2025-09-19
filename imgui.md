@@ -10,7 +10,7 @@ All functions parameters run in script fiber
 **Example Usage:**
 ```lua
 ImGui.register_draw(function()
-	--ui
+	- all ImGui functions here
 end)
 
 ```
