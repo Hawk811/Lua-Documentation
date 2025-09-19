@@ -35,6 +35,8 @@ end
 These binding are custom made for Atlas UI.
 
 
+**ListHeader**
+**EndLstHeader**
 ```lua
  ImGui.ListHeader("Quick Actions", 180)
  	for i = 1, 10 do
@@ -45,6 +47,7 @@ These binding are custom made for Atlas UI.
  ImGui.EndLstHeader()
 
 ```
+This makes the custom block for Atlas UI
 <img width="296" height="270" alt="image" src="https://github.com/user-attachments/assets/63f82898-3fd8-4928-a096-2f6eee4f6ee2" />
 
 
