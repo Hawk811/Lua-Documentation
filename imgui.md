@@ -31,6 +31,21 @@ end
 -- this enables mouse and block game input
 ```
 
+# Custom_ImGui_Bindings
+These binding are custom made for Atlas UI.
+
+
+```lua
+ ImGui.ListHeader("Quick Actions", 180)
+ 	for i = 1, 10 do
+    	if ImGui.Button("Button " .. i) then
+        	log.info("Clicked Button " .. i)
+        end
+    end
+ ImGui.EndLstHeader()
+
+```
+
 # ImGui_Bindings
 
 # Documentation
