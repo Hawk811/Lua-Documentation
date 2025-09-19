@@ -50,7 +50,7 @@ These binding are custom made for Atlas UI.
 ```
 <img width="296" height="270" alt="image" src="https://github.com/user-attachments/assets/63f82898-3fd8-4928-a096-2f6eee4f6ee2" />
 
-### `Combo(name, array, int_index, function`
+### `Combo(name, array, int_index, function)`
 - A default combo (custom made for more simplicity)
 ```lua
 local items = { "Option A", "Option B", "Option C", "Option D" }
