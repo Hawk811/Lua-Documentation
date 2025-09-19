@@ -35,10 +35,10 @@ end
 These binding are custom made for Atlas UI.
 
 
-**ListHeader**
+### `ListHeader`
  | 
-**EndLstHeader**
-This makes the custom block for Atlas UI
+### `EndLstHeader`
+- This makes the custom block for Atlas UI
 ```lua
  ImGui.ListHeader("Quick Actions", 180)
  	for i = 1, 10 do
@@ -51,8 +51,8 @@ This makes the custom block for Atlas UI
 ```
 <img width="296" height="270" alt="image" src="https://github.com/user-attachments/assets/63f82898-3fd8-4928-a096-2f6eee4f6ee2" />
 
-**Combo**
-A default combo (custom made for more simplicity)
+### `Combo`
+- A default combo (custom made for more simplicity)
 ```lua
 local items = { "Option A", "Option B", "Option C", "Option D" }
 local combo_index1 = 0
