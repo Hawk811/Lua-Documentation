@@ -36,7 +36,6 @@ These binding are custom made for Atlas UI.
 
 
 ### `ListHeader`
- | 
 ### `EndLstHeader`
 - This makes the custom block for Atlas UI
 ```lua
