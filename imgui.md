@@ -36,7 +36,7 @@ These binding are custom made for Atlas UI.
 
 
 **ListHeader**
-/n
+-
 **EndLstHeader**
 ```lua
  ImGui.ListHeader("Quick Actions", 180)
