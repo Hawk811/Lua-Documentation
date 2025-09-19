@@ -40,15 +40,16 @@ These binding are custom made for Atlas UI.
 - This makes the custom block for Atlas UI
 ```lua
  ImGui.ListHeader("Quick Actions", 180)
- 	for i = 1, 10 do
+ 	for i = 1, 2 do
     	if ImGui.Button("Button " .. i) then
         	log.info("Clicked Button " .. i)
         end
     end
- ImGui.EndLstHeader()
+ ImGui.EndListHeader()
 
 ```
-<img width="296" height="270" alt="image" src="https://github.com/user-attachments/assets/63f82898-3fd8-4928-a096-2f6eee4f6ee2" />
+<img width="237" height="185" alt="image" src="https://github.com/user-attachments/assets/9e7195ee-5ebe-488a-b984-896096d8ae9f" />
+
 
 ### `Combo(name, array, int_index, function)`
 - A default combo (custom made for more simplicity)
