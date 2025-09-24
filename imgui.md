@@ -130,6 +130,9 @@ You can find all the supported functions and overloads below.
   hovered = ImGui.IswindowHovered()
   hovered = ImGui.IsWindowHovered(ImGuiHoveredFlags.ChildWindows)
 
+  -- ImGui.GetWindowDrawList()
+ local drawlist = ImGui.GetWindowDrawList()
+
   -- ImGui.GetWindowDpiScale()
   -- Returns: float (dpiScale)
   dpiScale = ImGui.GetWindowDpiScale()
@@ -1428,6 +1431,12 @@ selected, activated = ImGui.MenuItem("Label", "ALT+F4", selected, true)
   -- Returns double (time)
   time = ImGui.GetTime()
 
+  -- ImGui.GetBackgroundDrawList()
+ local drawlist = ImGui.GetBackgroundDrawList()
+
+  -- ImGui.GetForegroundDrawList()
+ local drawlist = ImGui.GetForegroundDrawList()
+
   -- ImGui.GetFrameCount()
   -- Returns int (frame_count)
   frame_count = ImGui.GetFrameCount()
@@ -1618,3 +1627,77 @@ selected, activated = ImGui.MenuItem("Label", "ALT+F4", selected, true)
   -- Parameters: text (text)
   ImGui.SetClipboardText("I made it to the clipboard!")
 ```
+
+## Drawing APIs
+```lua
+ -- ImGui.ImDrawListAddLine(...)
+-- Parameters: draw_list (ImDrawList*), x1 (float), y1 (float), x2 (float), y2 (float), col (int), [thickness (float)]
+ImGui.ImDrawListAddLine(draw_list, 0, 0, 100, 100, 0xFFFFFFFF)
+
+-- ImGui.ImDrawListAddRect(...)
+-- Parameters: draw_list (ImDrawList*), x1 (float), y1 (float), x2 (float), y2 (float), col (int), [rounding (float)], [flags (int)], [thickness (float)]
+ImGui.ImDrawListAddRect(draw_list, 0, 0, 200, 200, 0xFFFFFFFF)
+
+-- ImGui.ImDrawListAddRectFilled(...)
+-- Parameters: draw_list (ImDrawList*), x1 (float), y1 (float), x2 (float), y2 (float), col (int), [rounding (float)], [flags (int)]
+ImGui.ImDrawListAddRectFilled(draw_list, 0, 0, 200, 200, 0xFF00FF00)
+
+-- ImGui.ImDrawListAddRectFilledMultiColor(...)
+-- Parameters: draw_list (ImDrawList*), x1 (float), y1 (float), x2 (float), y2 (float),
+--             col_upr_left (int), col_upr_right (int), col_bot_right (int), col_bot_left (int)
+ImGui.ImDrawListAddRectFilledMultiColor(draw_list, 0, 0, 200, 200,
+    0xFFFF0000, 0xFF00FF00, 0xFF0000FF, 0xFFFFFF00)
+
+-- ImGui.ImDrawListAddQuad(...)
+-- Parameters: draw_list (ImDrawList*),
+--             x1,y1, x2,y2, x3,y3, x4,y4 (float), col (int), [thickness (float)]
+ImGui.ImDrawListAddQuad(draw_list, 0, 0, 50, 100, 100, 100, 150, 0, 0xFFFFFFFF)
+
+-- ImGui.ImDrawListAddQuadFilled(...)
+-- Parameters: draw_list (ImDrawList*),
+--             x1,y1, x2,y2, x3,y3, x4,y4 (float), col (int)
+ImGui.ImDrawListAddQuadFilled(draw_list, 0, 0, 50, 100, 100, 100, 150, 0, 0xFF00FFFF)
+
+-- ImGui.ImDrawListAddTriangle(...)
+-- Parameters: draw_list (ImDrawList*),
+--             x1,y1, x2,y2, x3,y3 (float), col (int), [thickness (float)]
+ImGui.ImDrawListAddTriangle(draw_list, 0, 0, 100, 0, 50, 100, 0xFFFFFFFF)
+
+-- ImGui.ImDrawListAddTriangleFilled(...)
+-- Parameters: draw_list (ImDrawList*),
+--             x1,y1, x2,y2, x3,y3 (float), col (int)
+ImGui.ImDrawListAddTriangleFilled(draw_list, 0, 0, 100, 0, 50, 100, 0xFF00FF00)
+
+-- ImGui.ImDrawListAddCircle(...)
+-- Parameters: draw_list (ImDrawList*), x (float), y (float), radius (float), col (int), [segments (int)], [thickness (float)]
+ImGui.ImDrawListAddCircle(draw_list, 100, 100, 50, 0xFFFFFFFF)
+
+-- ImGui.ImDrawListAddCircleFilled(...)
+-- Parameters: draw_list (ImDrawList*), x (float), y (float), radius (float), col (int), [segments (int)]
+ImGui.ImDrawListAddCircleFilled(draw_list, 100, 100, 50, 0xFF00FF00)
+
+-- ImGui.ImDrawListAddNgon(...)
+-- Parameters: draw_list (ImDrawList*), x (float), y (float), radius (float), col (int), segments (int), [thickness (float)]
+ImGui.ImDrawListAddNgon(draw_list, 100, 100, 50, 0xFFFFFFFF, 6)
+
+-- ImGui.ImDrawListAddNgonFilled(...)
+-- Parameters: draw_list (ImDrawList*), x (float), y (float), radius (float), col (int), segments (int)
+ImGui.ImDrawListAddNgonFilled(draw_list, 100, 100, 50, 0xFF00FF00, 6)
+
+-- ImGui.ImDrawListAddText(...)
+-- Parameters: draw_list (ImDrawList*), x (float), y (float), col (int), text (string), [wrap_width (float)]
+ImGui.ImDrawListAddText(draw_list, 10, 10, 0xFFFFFFFF, "Hello, ImGui!")
+
+-- ImGui.ImDrawListAddBezierCubic(...)
+-- Parameters: draw_list (ImDrawList*),
+--             x1,y1, x2,y2, x3,y3, x4,y4 (float), col (int), thickness (float), [segments (int)]
+ImGui.ImDrawListAddBezierCubic(draw_list, 50,50, 150,50, 50,150, 150,150, 0xFFFFFFFF, 1.0)
+
+-- ImGui.ImDrawListAddBezierQuadratic(...)
+-- Parameters: draw_list (ImDrawList*),
+--             x1,y1, x2,y2, x3,y3 (float), col (int), thickness (float), [segments (int)]
+ImGui.ImDrawListAddBezierQuadratic(draw_list, 50,50, 150,50, 100,150, 0xFFFFFFFF, 1.0)
+
+```
+
+
