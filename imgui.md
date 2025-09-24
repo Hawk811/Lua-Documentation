@@ -145,6 +145,10 @@ You can find all the supported functions and overloads below.
   -- Returns: float (size_x), float (size_y)
   size_x, size_y = ImGui.GetWindowSize()
 
+  -- ImGui.GetDisplaySize()
+  -- Returns: float (size_x), float (size_y)
+  size_x, size_y = ImGui.GetDisplaySize()
+
   -- ImGui.GetWindowWidth()
   -- Returns: float (width)
   width = ImGui.GetWindowWidth()
