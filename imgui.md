@@ -590,12 +590,12 @@ You can find all the supported functions and overloads below.
   clicked = ImGui.ArrowButton("I have an arrow", ImGuiDir.Down)
 
   -- ImGui.ImageButton(...)
-  -- Parameters: text (str_id), uintptr_t (image), float (width), float (length)
+  -- Parameters: text (str_id), ImTextureID (image), float (width), float (length)
   -- Returns: bool (clicked)
   clicked = ImGui.ImageButton(text, MyImage, 100, 100)
 
   -- ImGui.Image(...)
-  -- Parameters: uintptr_t (image), float (width), float (length)
+  -- Parameters: ImTextureID (image), float (width), float (length)
   ImGui.Image(MyImage, 100, 100)
 
   -- ImGui.Checkbox(...)
@@ -1426,11 +1426,13 @@ selected, activated = ImGui.MenuItem("Label", "ALT+F4", selected, true)
   ImGui.ImGuiSetNextItemAllowOverlap()
 
   -- ImGui.LoadImageURL(...)
-  -- Parameters: URL (string) 
+  -- Parameters: URL (string)
+  -- Returns: ImTextureID (MyImage)
   MyImage = ImGui.LoadImageURL(URL)
 
   -- ImGui.LoadImagePath(...)
-  -- Parameters: Path (string) 
+  -- Parameters: Path (string)
+  -- Returns: ImTextureID (MyImage)
   MyImage = ImGui.LoadImagePath(Path)
 
   -- DEPRECATED
