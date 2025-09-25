@@ -35,6 +35,22 @@ local handle = Memory.ptr_to_handle(pedPtr)
 log.info("Handle: " .. handle)
 ```
 
+### `allocate(size)`
+
+  Add a clickable action/button to the submenu.
+
+- **Parameters:**
+  - `size` (integer): Number of bytes to allocate.
+
+ - **Returns:**
+  - `intptr_t`: Pointer to the newly allocated memory block.
+    
+**Example Usage:**
+```lua
+local buf = Memory.allocate(64)
+log.info("Allocated buffer at: 0x" .. string.format("%X", buf))
+```
+
 
 ### `free(buffer)`
 
