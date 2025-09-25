@@ -1,4 +1,4 @@
-# Table: memory
+# Table: Memory
 
 Table for memory scanning.
 
@@ -17,7 +17,7 @@ Table for memory scanning.
 **Example Usage:**
 ```lua
 local playerPed = PLAYER.PLAYER_PED_ID()
-local pedPtr = memory.handle_to_ptr(playerPed)
+local pedPtr = Memory.handle_to_ptr(playerPed)
 log.info(string.format("Player ped pointer: 0x%X", pedPtr))
 ```
 
@@ -31,40 +31,10 @@ log.info(string.format("Player ped pointer: 0x%X", pedPtr))
 
 **Example Usage:**
 ```lua
-local handle = memory.ptr_to_handle(pedPtr)
+local handle = Memory.ptr_to_handle(pedPtr)
 log.info("Handle: " .. handle)
 ```
 
-
-### `allocate(size)`
-
- Create and attach a child submenu to the current submenu.
-
-- **Parameters:**
-  - `size` (int): size of buffer.
-
-- **Returns:**
-  - `buffer` returns buffer.
- 
-**Example Usage:**
-```lua
-local buf = memory.allocate(128)
-log.info(string.format("Allocated buffer: 0x%X", memory.get_ptr(buf)))
-
-OR
-
-local mem = memory.allocate(16)
-
-memory.set_u32(mem, 1337)
-local v = memory.get_u32(mem)
-log.info("Value is: ", v)  -- should be 1337
-
-memory.set_float(mem, 3.14)
-local f = memory.get_float(mem)
-log.info("Float is: ", f)
-
-memory.free(mem)
-```
 
 ### `free(buffer)`
 
@@ -75,127 +45,71 @@ memory.free(mem)
  
 **Example Usage:**
 ```lua
-memory.free(buf)
+Memory.free(buf)
 log.info("Buffer freed.")
 ```
 
-### `pattern(label, pattern)`
+### `Scan(label, pattern)`
 
 - **Parameters:**
     - `label` (string): Name for Pattern.
     - `pattern` (string): pattern in string.
 
  - **Returns:**
-  - `Address` returns scanned memory.
+  - `Handle` returns scanned memory Handle.
 
  - **Memory Class:**
-  - memory.add(intptr_t)
-  - memory.sub(intptr_t)
-  - memory.rip()
-    
-  - memory.get_u8(address) -> uint8_t
-  - memory.get_u16(address) -> uint16_t
-  - memory.get_u32(address) -> uint32_t
-  - memory.get_u64(address) -> uint64_t
-  - memory.get_float(address) -> float
-  - memory.get_ptr(address) -> uintptr_t
-  - memory.get_bool(address) -> bool
-    
-  - memory.set_u8(address, uint8_t)
-  - memory.set_u16(address, uint16_t)
-  - memory.set_u32(address, uint32_t)
-  - memory.set_u64(address, uint64_t)
-  - memory.set_float(address, float)
-  - memory.set_bool(address, bool)
-    
-  - memory.is_valid(address) -> bool
+  .Add(int)
+  .Sub(int)
+  .Rip()
+  .Raw - Returns raw address
 ```lua
-memory.set_u8(ptr, 0xFF)
-memory.set_u16(ptr, 0xBEEF)
-memory.set_u32(ptr, 12345)
-memory.set_u64(ptr, 0xDEADBEEFCAFEBABE)
-memory.set_float(ptr, 3.14159)
-memory.set_bool(ptr, true)
-```
-
-**Example Usage:**
-```lua
--- === 1) Scan for a pattern ===
-local addr = memory.pattern("NPMLUA", "0F B6 05 ? ? ? ? 0A 05 ? ? ? ? 75 2A")
-if memory.is_valid(addr) then
-    log.info(string.format("Found pattern at: 0x%X", addr))
-
-    local new_addr = memory.add(addr, 3)
-    local ripped_addr = memory.rip(new_addr) -- dereference RIP displacement
-
-    local bool_val = memory.get_bool(ripped_addr)
-    log.info("Bool value at ripped address (0x" .. string.format("%X", ripped_addr) .. "): " .. tostring(bool_val))
-end
+  Memory.Scan("NEM2", "4C 8B 05 ? ? ? ? 44 0F B7 CA", function(addr)
+  local rip_target = addr.Add(3).Rip() 
+  log.info(string.format("address of global: 0x%X", rip_target.Raw))
+  end)
 ```
 
 
-**Example LUA:**
-```lua
-   -- === 1) Get player ped handle and pointer ===
-local ped = PLAYER.PLAYER_PED_ID()
-local pedPtr = memory.handle_to_ptr(ped)
-log.info(string.format("[1] Player ped pointer: 0x%X", pedPtr))
+### `BytePatch(label, pattern)`
 
--- === 2) Convert pointer back to handle ===
-local handleAgain = memory.ptr_to_handle(pedPtr)
-log.info(string.format("[2] Pointer back to handle: %d", handleAgain))
-
--- === 3) Allocate a buffer ===
-local buf = memory.allocate(64)
-log.info(string.format("[3] Allocated buffer: 0x%X", memory.get_ptr(buf)))
-
--- === 4) Write to it (if you have set_* bound) or read default ===
--- Here we just read: should be zero
-local val = memory.get_u32(buf)
-log.info(string.format("[4] Buffer initial u32: %d", val))
-
--- === 5) Pattern scan example ===
-local pattern = memory.pattern("TestPattern", "72 C7 EB 02 31 C0 8B 0D")
-if memory.is_valid(pattern) then
-    local addr = memory.add(pattern, 0x1A):rip()
-    local rippedaddr = memory.rip(addr)
-    local patVal = memory:get_u32(rippedaddr)
-    log.info(string.format("[5] Pattern scan value: 0x%X", patVal))
-else
-    log.info("[5] Pattern not found.")
-end
-
--- === 6) Free the buffer ===
-memory.free(buf)
-log.info("[6] Buffer freed.")
-```
-
-
-### `byte_patch(label, pattern)`
+ - **BytePatch Class:**
+.Add(Raw Address, {table})
+.Apply()
+.Restore()
+.Toggle(bool)
+.is_valid() - returns bool
 
 - **Parameters:**
     - `address` (uintptr_t): address.
     - `{}` (array): array of bytes.
 
  - **Returns:**
-  - `address` returns ready address [void*].
-
- - **Memory Class:**
-  - memory.apply_patch(address)
-  - memory.restore_patch(address)
+  - `Handle` returns BytePatch handle.
     
 ```lua
-local addr = memory.pattern("GCGP", "48 8B 54 C1 ? 4C 8B A9")
-local patch_addr = memory.byte_patch(addr, { 0x90, 0x90, 0x90, 0x90, 0x90 })
+Test_Patch = nil
+toggleStumble = false
+Memory.Scan("CDSS", "56 57 53 48 81 EC ? ? ? ? 44 0F 29 94 24 ? ? ? ? 44 0F 29 4C 24 ? 44 0F 29 44 24 ? 0F 29 7C 24 ? 0F 29 74 24 ? 89 D3",
+  function(r0_5947)
+    log.info(string.format("address of global: 0x%X", r0_5947.Raw))
+    Test_Patch = BytePatch.Add(r0_5947.Raw, { 0xB0, 0x00, 0xC3 })
+  end
+)
 
-function my_loop()
-	script.yield()
-    if not TASK.IS_PED_STILL(PLAYER.PLAYER_PED_ID()) then
-       memory.apply_patch(patch_addr)
-    else
-	      memory.restore_patch(patch_addr)
+ImGui.register_draw(function()
+   if ImGui.Begin("Test Window", menu.is_open()) then
+
+ 		value, pressed =ImGui.Checkbox("Test", value)
+ 		if pressed then
+			if Test_Patch and Test_Patch.is_valid() then
+            		Test_Patch.Toggle(value)
+            		log.info("Patch toggled: " .. tostring(value))
+        	end
+		end
+
+        ImGui.End()
     end
-end
+end)
 
-script.register_looped(my_loop)
 ```
