@@ -94,7 +94,7 @@ log.info("Buffer freed.")
   - .set_float(float)
   - .set_bool(bool)
     
-  - memory.is_valid(address) -> bool
+  - .is_valid() -> bool
 ```lua
   Memory.Scan("NEM2", "4C 8B 05 ? ? ? ? 44 0F B7 CA", function(addr)
   local rip_target = addr.Add(3).Rip() 
