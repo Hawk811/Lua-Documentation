@@ -123,9 +123,9 @@ log.info("Buffer freed.")
 Test_Patch = nil
 toggleStumble = false
 Memory.Scan("CDSS", "56 57 53 48 81 EC ? ? ? ? 44 0F 29 94 24 ? ? ? ? 44 0F 29 4C 24 ? 44 0F 29 44 24 ? 0F 29 7C 24 ? 0F 29 74 24 ? 89 D3",
-  function(r0_5947)
-    log.info(string.format("address of global: 0x%X", r0_5947.Raw))
-    Test_Patch = BytePatch.Add(r0_5947.Raw, { 0xB0, 0x00, 0xC3 })
+  function(addr)
+    log.info(string.format("address of global: 0x%X", addr.Raw))
+    Test_Patch = BytePatch.Add(addr.Raw, { 0xB0, 0x00, 0xC3 })
   end
 )
 
