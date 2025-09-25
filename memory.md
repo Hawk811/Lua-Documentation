@@ -75,10 +75,26 @@ log.info("Buffer freed.")
   - `Handle` returns scanned memory Handle.
 
  - **Memory Class:**
-  .Add(int)
-  .Sub(int)
-  .Rip()
-  .Raw - Returns raw address
+  - .Add(int)
+  - .Sub(int)
+  - .Rip()
+  - .Raw - Returns raw address
+  - .get_u8() -> uint8_t
+  - .get_u16() -> uint16_t
+  - .get_u32() -> uint32_t
+  - .get_u64() -> uint64_t
+  - .get_float() -> float
+  - .get_ptr() -> uintptr_t
+  - .get_bool() -> bool
+    
+  - .set_u8(uint8_t)
+  - .set_u16(uint16_t)
+  - .set_u32(uint32_t)
+  - .set_u64(uint64_t)
+  - .set_float(float)
+  - .set_bool(bool)
+    
+  - memory.is_valid(address) -> bool
 ```lua
   Memory.Scan("NEM2", "4C 8B 05 ? ? ? ? 44 0F B7 CA", function(addr)
   local rip_target = addr.Add(3).Rip() 
@@ -91,10 +107,10 @@ log.info("Buffer freed.")
 
  - **BytePatch Class:**
 .Add(Raw Address, {table})
-.Apply()
-.Restore()
-.Toggle(bool)
-.is_valid() - returns bool
+- .Apply()
+- .Restore()
+- .Toggle(bool)
+- .is_valid() - returns bool
 
 - **Parameters:**
     - `address` (uintptr_t): address.
