@@ -74,6 +74,15 @@ log.info(string.format("My Ped Handle: %d", myPed))
 playerID = network.get_selected_player()
 ```
 
+### `set_selected_player(id)`
+
+- **Function**
+  - This also sets selected player for main player tab
+
+**Example Usage:**
+```lua
+network.set_selected_player(id)
+```
 
 ### `force_script_host(script_name)`
 
