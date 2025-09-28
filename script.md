@@ -26,7 +26,7 @@ script.register_looped(function (script)
      -- removes model from game memory as we no longer need it
      STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ModelHash)
      -- sleep for 2s
-     script.sleep(2000)
+     script.yield(2000)
      ENTITY.DELETE_ENTITY(spawnedVehicle)
 end)
 ```
@@ -61,7 +61,7 @@ script.run_in_fiber(function (script)
      -- removes model from game memory as we no longer need it
      STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ModelHash)
      -- sleep for 2s
-     script.sleep(2000)
+     script.yield(2000)
      ENTITY.DELETE_ENTITY(spawnedVehicle)
 end)
 ```
@@ -96,7 +96,7 @@ script.execute_as_script("freemode", function (script)
      -- removes model from game memory as we no longer need it
      STREAMING.SET_MODEL_AS_NO_LONGER_NEEDED(ModelHash)
      -- sleep for 2s
-     script.sleep(2000)
+     script.yield(2000)
      ENTITY.DELETE_ENTITY(spawnedVehicle)
 end)
 ```
@@ -132,11 +132,12 @@ Yield execution.
 **Exemple Usage:**
 ```lua
 script.yield()
+script.yield(ms)
 ```
 
 ### `sleep(ms)`
 
-Sleep for the given amount of time, time is in milliseconds.
+Sleep for the given amount of time, time is in milliseconds. this function does the same thing as yield
 
 - **Parameters:**
   - `ms` (integer): The amount of time in milliseconds that we will sleep for.
