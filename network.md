@@ -49,18 +49,18 @@ local maxPlayers = network.player_count()
 
 **Example Usage:**
 ```lua
-local count = memory.player_count
+local count = network.player_count
 log.info("Total players in session: " .. count)
 
 -- === Example: loop through all players ===
 for i = 0, count - 1 do
-    local ped = memory.get_player_ped(i)
+    local ped = network.get_player_ped(i)
     log.info(string.format("Player ID %d -> Ped Handle %d", i, ped))
 end
 
 -- === Example: get local player ped ===
 local myId = PLAYER.PLAYER_ID()  -- or 0 if you want self
-local myPed = memory.get_player_ped(myId)
+local myPed = network.get_player_ped(myId)
 log.info(string.format("My Ped Handle: %d", myPed))
 ```
 
