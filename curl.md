@@ -1,79 +1,82 @@
-# Table: menu
+# Table: Curl
 
 Table for creating options in ui. This uses the imgui bindings. 
 
 ## Functions (3)
 
-### `on_draw(function)`
+### `init()`
 
- creates a tab in scripting with lua name.
+ returns curl_easy_init.
 
 **Example Usage:**
 ```lua
-menu.on_draw(function()
-    if ImGui.BeginTabBar("my_tabs") then   -- starts tab bar
-
-        -- Tab 1
-        if ImGui.BeginTabItem("Tab 1") then
-            ImGui.Text("This is inside Tab 1")
-
-            -- Open a header block
-            ImGui.ListHeader("Quick Actions", 180)
-            for i = 1, 10 do
-                if ImGui.Button("Button " .. i) then
-                    log.info("Clicked Button " .. i)
-                end
-            end
-            ImGui.EndListHeader()         -- close header block
-
-            ImGui.EndTabItem()            -- close Tab 1
-        end
-
-    end
-end)
-
-
+local c = Curl.init()
 ```
 
-### `on_draw_player(function)`
-
- creates a tab in players section with lua name.
+### `SetOpt(CURL, opt, val)`
 
 **Example Usage:**
 ```lua
-menu.on_draw_player(function()
-    if ImGui.BeginTabBar("my_tabs") then   -- starts tab bar
-
-        -- Tab 1
-        if ImGui.BeginTabItem("Tab 1") then
-            ImGui.Text("This is inside Tab 1")
-
-            -- Open a header block
-            ImGui.ListHeader("Quick Actions", 180)
-            for i = 1, 10 do
-                if ImGui.Button("Button " .. i) then
-                    log.info("Clicked Button " .. i)
-                end
-            end
-            ImGui.EndListHeader()         -- close header block
-
-            ImGui.EndTabItem()            -- close Tab 1
-        end
-
-    end
-end)
-
-
+local c = Curl.init()
+Curl.SetOpt(c, Curl.CURLOPT_URL, "https://atlasmenu.net/API/API?update_bans=0") -- correct
+Curl.SetOpt(c, Curl.OPT_FOLLOWLOCATION, 1) -- also works
+Curl.SetOpt(c, 10023, { "X-Test: 123", "User-Agent: AtlasBot" })
+Curl.SetOpt(c, Curl.OPT_USERAGENT, "AtlasBot/1.0")
 ```
 
-### `is_open()`
+### `Perform()`
 
- Returns if UI is open.
-
-- **Returns:**
-  - `bool` A handle representing if UI is open.
+executes function
 
 **Example Usage:**
 ```lua
-local isUIOpen = menu.is_open()
+local c = Curl.init()
+Curl.SetOpt(c, Curl.CURLOPT_URL, "https://atlasmenu.net/API/API?update_bans=0") -- correct
+Curl.SetOpt(c, Curl.OPT_FOLLOWLOCATION, 1) -- also works
+Curl.SetOpt(c, 10023, { "X-Test: 123", "User-Agent: AtlasBot" })
+Curl.SetOpt(c, Curl.OPT_USERAGENT, "AtlasBot/1.0")
+local result = Curl.Perform(c)
+log.info("Response: " .. result)
+```
+
+```lua
+Curl.CURLOPT_URL;
+Curl.CURLOPT_FOLLOWLOCATION;
+Curl.CURLOPT_USERAGENT;
+Curl.CURLOPT_REFERER;
+Curl.CURLOPT_POSTFIELDS;
+Curl.CURLOPT_HTTPHEADER;
+Curl.CURLOPT_COOKIE;
+Curl.CURLOPT_COOKIEFILE;
+Curl.CURLOPT_COOKIEJAR;
+Curl.CURLOPT_ACCEPT_ENCODING;
+
+ // Networking
+Curl.CURLOPT_PORT;
+Curl.CURLOPT_TIMEOUT;
+Curl.CURLOPT_CONNECTTIMEOUT;
+Curl.CURLOPT_LOW_SPEED_LIMIT;
+Curl.CURLOPT_LOW_SPEED_TIME;
+
+ // Redirects and auth
+Curl.CURLOPT_MAXREDIRS;
+Curl.CURLOPT_HTTPAUTH;
+Curl.CURLOPT_USERNAME;
+Curl.CURLOPT_PASSWORD;
+
+ // SSL/TLS
+Curl.CURLOPT_SSL_VERIFYPEER;
+Curl.CURLOPT_SSL_VERIFYHOST;
+Curl.CURLOPT_CAINFO;
+Curl.CURLOPT_CAPATH;
+
+ // Proxies
+Curl.CURLOPT_PROXY;
+Curl.CURLOPT_PROXYPORT;
+Curl.CURLOPT_PROXYUSERPWD;
+
+ // Verbosity / Debugging
+Curl.CURLOPT_VERBOSE;
+Curl.CURLOPT_NOBODY;
+Curl.CURLOPT_HEADER;
 ```
