@@ -18,7 +18,7 @@ local c = Curl.init()
 **Example Usage:**
 ```lua
 local c = Curl.init()
-Curl.SetOpt(c, Curl.OPT_URL, "https://atlasmenu.net/API/API?update_bans=0") -- correct
+Curl.SetOpt(c, Curl.OPT_URL, "URL") -- correct
 Curl.SetOpt(c, Curl.OPT_FOLLOWLOCATION, 1) -- also works
 Curl.SetOpt(c, 10023, { "X-Test: 123", "User-Agent: AtlasBot" })
 Curl.SetOpt(c, Curl.OPT_USERAGENT, "AtlasBot/1.0")
@@ -31,7 +31,7 @@ executes function
 **Example Usage:**
 ```lua
 local c = Curl.init()
-Curl.SetOpt(c, Curl.OPT_URL, "https://atlasmenu.net/API/API?update_bans=0") -- correct
+Curl.SetOpt(c, Curl.OPT_URL, "URL") -- correct
 Curl.SetOpt(c, Curl.OPT_FOLLOWLOCATION, 1) -- also works
 Curl.SetOpt(c, 10023, { "X-Test: 123", "User-Agent: AtlasBot" })
 Curl.SetOpt(c, Curl.OPT_USERAGENT, "AtlasBot/1.0")
